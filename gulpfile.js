@@ -10,6 +10,7 @@ const notify = require('gulp-notify');
 const sass = require('gulp-sass');
 const plumber = require('gulp-plumber');
 const concat = require('gulp-concat');
+const historyApiFallback = require('connect-history-api-fallback');
 
 gulp.task('styles', () => {
     return gulp.src('./dev/styles/**/*.scss')
@@ -38,6 +39,7 @@ gulp.task('js', () => {
 gulp.task('bs', () => {
     browserSync.init({
     	port:8383,
+        middleware: [historyApiFallback()],
         server: {
             baseDir: './'
         }
