@@ -11,18 +11,49 @@ import UserSearchedShows from './components/UserSearchedShows'
 
 
 class App extends React.Component {
-	// constructor(){
-	// 	super();
-		
-	// }
+  	constructor(props){
+  		super(props);
+  		this.handleChange = this.handleChange.bind(this);
+      this.searchShows = this.searchShows.bind(this);
+      this.state = {
+        searchedShowsList : []
+      };
+    }
+
+    handleChange(event) {
+      this.setState({
+        [event.target.name] : event.target.value
+      })
+    }
+
+    searchShows(e) {
+      e.preventDefault();
+       const showName = this.state.searchedShows
+      
+      ajax({
+        url:`http://api.tvmaze.com/search/shows`,
+        method: "GET",
+        dataType: "json",
+        data: {
+          q: showName
+        }
+      }).then((res)=> {
+        this.setState({
+          searchedShowsList : res
+        })
+        console.log(res);
+      })
+
+    }
+
 
     render() {
         return (
             <div>
               <h1>All set and ready.</h1>
               <Navigation />
-              <SearchBar />
-              <UserSearchedShows />
+              <SearchBar handleChange={this.handleChange} searchShows={this.searchShows} />
+              <UserSearchedShows handleChange={this.handleChange} searchShows={this.searchShows} searchedShowsList = {this.state.searchedShowsList}/>
               <Catalogue />
             </div>
         )
