@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { 
     BrowserRouter as Router, 
     Route, Link, NavLink } from 'react-router-dom';
-import { ajax } from 'jquery'
+import { ajax } from 'jquery';
 
 
 class App extends React.Component {

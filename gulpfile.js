@@ -17,6 +17,7 @@ gulp.task('styles', () => {
         .pipe(sass().on('error', sass.logError))
         .pipe(concat('style.css'))
         .pipe(gulp.dest('./public/styles'))
+        
 });
 
 gulp.task('js', () => {
@@ -47,7 +48,7 @@ gulp.task('bs', () => {
 });
 
 gulp.task('default', ['js','bs', 'styles'], () => {
-    gulp.watch('dev/**/*.js',['js']);
-    gulp.watch('dev/**/*.scss',['styles']);
+    gulp.watch('./dev/**/*.js',['js']);
+    gulp.watch('./dev/**/*.scss',['styles']);
     gulp.watch('./public/styles/style.css',reload);
 });
