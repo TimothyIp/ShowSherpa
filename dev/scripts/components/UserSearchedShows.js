@@ -6,7 +6,7 @@ class UserSearchedShows extends React.Component {
 	render(){
 		return (
 			<div>
-				Here are searched shows.
+				Here are your user searched shows.
 				<SearchBar handleChange={this.props.handleChange} searchShows={this.props.searchShows} />
 				<ShowCards showsList = {this.props.searchedShowsList} />
 			</div>

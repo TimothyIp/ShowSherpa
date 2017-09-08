@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Catalogue extends React.Component {
+class UserCatalogue extends React.Component {
 	render(){
 		return (
 			<div>
@@ -10,4 +10,4 @@ class Catalogue extends React.Component {
 	}
 }
 
-export default Catalogue;
+export default UserCatalogue;

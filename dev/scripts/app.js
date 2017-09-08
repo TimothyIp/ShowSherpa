@@ -5,14 +5,13 @@ import {
     Route, Link, NavLink } from 'react-router-dom';
 import { ajax } from 'jquery';
 import Navigation from './components/Navigation';
-import Catalogue from './components/Catalogue';
+import UserCatalogue from './components/UserCatalogue';
 import SearchBar from './components/SearchBar';
-import UserSearchedShows from './components/UserSearchedShows'
-
+import UserSearchedShows from './components/UserSearchedShows';
 
 class App extends React.Component {
-  	constructor(props){
-  		super(props);
+  	constructor(){
+  		super();
   		this.handleChange = this.handleChange.bind(this);
       this.searchShows = this.searchShows.bind(this);
       this.state = {
@@ -38,15 +37,22 @@ class App extends React.Component {
           q: showName
         }
       }).then((res)=> {
+
+        //filter out tv shows with no posters
+        let showsWithPoster= [];
+        for (let i = 0; i < res.length; i++) {
+          if (res[i].show.image) {
+            showsWithPoster.push(res[i]);
+          }
+        }
+
+
         this.setState({
-          searchedShowsList : res
+          searchedShowsList : showsWithPoster
         })
-        console.log(res);
       })
 
     }
-
-
     render() {
         return (
             <div>
@@ -54,10 +60,11 @@ class App extends React.Component {
               <Navigation />
               <SearchBar handleChange={this.handleChange} searchShows={this.searchShows} />
               <UserSearchedShows handleChange={this.handleChange} searchShows={this.searchShows} searchedShowsList = {this.state.searchedShowsList}/>
-              <Catalogue />
+              <UserCatalogue />
             </div>
         )
     }
 }
+
 
 ReactDOM.render(<App />, document.getElementById('app'));

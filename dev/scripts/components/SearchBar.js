@@ -1,5 +1,4 @@
 import React from 'react';
-import { ajax } from 'jquery';
 
 class SearchBar extends React.Component {
 	render(){
