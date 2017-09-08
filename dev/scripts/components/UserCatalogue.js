@@ -4,7 +4,7 @@ class UserCatalogue extends React.Component {
 	render(){
 		return (
 			<div>
-				Tv Shows go Here...
+				<h1>User Catalogue Component</h1>
 			</div>
 			)
 	}
