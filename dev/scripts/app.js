@@ -10,6 +10,12 @@ import SearchBar from './components/SearchBar';
 import UserSearchedShows from './components/UserSearchedShows';
 import Header from './components/Header';
 import MainPage from './components/MainPage';
+import UserCalendar from './components/UserCalendar';
+import moment from 'moment';
+import firebase from './firebase';
+
+const dbRef = firebase.database().ref('/usersvault');
+
 
 class App extends React.Component {
   	constructor(){
@@ -17,10 +23,15 @@ class App extends React.Component {
   		this.handleChange = this.handleChange.bind(this);
       this.searchShows = this.searchShows.bind(this);
       this.addToCollection = this.addToCollection.bind(this);
-      this.removeFromCollection= this.removeFromCollection.bind(this);
+      this.removeFromCollection = this.removeFromCollection.bind(this);
+      this.getUserShowTimes = this.getUserShowTimes.bind(this);
+      this.addToCalendar = this.addToCalendar.bind(this);
       this.state = {
         searchedShowsList : [],
-        userCollection: []
+        userCollection: [],
+        userShowTimes: [],
+        futureEpisodes: [],
+        events: []
       };
     }
 
@@ -28,25 +39,26 @@ class App extends React.Component {
       const showsPickedList = Array.from(this.state.userCollection);
       showsPickedList.push(show);
   
-       //remove duplicate tv shows
+      //remove duplicate tv shows
       let showsPicked = showsPickedList.filter( function( item, index, self) {
         return index == self.indexOf(item);
       })
 
-      console.log(showsPicked)
       this.setState({
         userCollection: showsPicked
+      }, () => {
+        this.getUserShowTimes();
       })
 
     }
 
-    removeFromCollection(show) {
+    removeFromCollection(index) {
       const showRemoved = Array.from(this.state.userCollection);
-      console.log(show)
-      showRemoved.splice(show,1);
-      console.log(showRemoved);
+      showRemoved.splice(index,1);
       this.setState({
         userCollection: showRemoved
+      }, () => {
+        this.getUserShowTimes();
       })
     }
 
@@ -80,18 +92,69 @@ class App extends React.Component {
         this.setState({
           searchedShowsList : showsWithPoster
         })
-        console.log(this.state.searchedShowsList)
+       
       })
 
     }
+
+    getUserShowTimes() {
+      const showTimesArray = Array.from(this.state.userCollection);
+      const showTimesInfo = [];
+      const todaysDate = moment().format("llll");
+
+      for (let i = 0; i < showTimesArray.length; i++) {
+        ajax({
+          url: `http://api.tvmaze.com/shows/${showTimesArray[i].id}/episodes`,
+          method: "GET",
+          dataType: "json"
+        }).then((res) => {
+          //Gets only future episodes from todays date
+          let futureEpisodeTime = res.filter((episode) => {
+            // console.log(moment(episode.airstamp).diff(moment()))
+            return moment(episode.airstamp).diff(moment()) > 0
+          })
+          //Only puts shows with future episodes into calendar
+          if (futureEpisodeTime.length > 0) {
+            showTimesInfo.push({
+            id: showTimesArray[i].id,
+            name: showTimesArray[i].name,
+            status: showTimesArray[i].status,
+            futureEpisodes: futureEpisodeTime
+            })
+          }
+        })
+      }
+
+      this.setState({
+        futureEpisodes: showTimesInfo
+      })
+      console.log(this.state.futureEpisodes)
+    }
+
+    addToCalendar() {
+      let eventList = [];
+      let eventArray = Array.from(this.state.futureEpisodes);
+      for (let i = 0; i < eventArray.length; i++) {
+        for (let j = 0; j < eventArray[i].futureEpisodes.length; j++) {
+          eventList.push({
+            title: eventArray[i].name,
+            start: moment(eventArray[i].futureEpisodes[j].airstamp).format("llll"),
+            end: moment(eventArray[i].futureEpisodes[j].airstamp).add(eventArray[i].futureEpisodes[j].runtime, "m").format("llll"),
+            desc: eventArray[i].futureEpisodes[j].name,
+          })
+        }
+      }
+        this.setState({
+          events: eventList
+        })
+       }
+
     render() {
         return (
           <Router>
               <div>
                 <Header />
                 <Navigation />
-                <h1>All set and ready.</h1>
-            
                 <Route exact 
                 path="/"
                 render={(props) => (
@@ -104,8 +167,27 @@ class App extends React.Component {
                   />
                 )}
                 />
-                <Route exact path="/usershows" component={UserCatalogue} />
-            
+                <Route exact 
+                path="/usershows" 
+                render={(props) => (
+                  <UserCatalogue
+                  userCollection={this.state.userCollection}
+                  removeFromCollection={this.removeFromCollection}
+                  />
+                  )}
+                />
+                <Route exact 
+                path="/user-showtimes"
+                render= {(props) => (
+                  <UserCalendar 
+                  userCollection = {this.state.userCollection}
+                  futureEpisodes = {this.state.futureEpisodes}
+                  getUserShowTimes = {this.getUserShowTimes}
+                  addToCalendar = {this.addToCalendar}
+                  events = {this.state.events}
+                  />
+                  )}
+                />
               </div>
             </Router>
         )
@@ -114,21 +196,3 @@ class App extends React.Component {
 
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
- // <SearchBar 
- //                handleChange={this.handleChange} 
- //                searchShows={this.searchShows} 
- //                />
- //                <UserSearchedShows 
- //                handleChange={this.handleChange} 
- //                searchShows={this.searchShows} 
- //                searchedShowsList = {this.state.searchedShowsList}
- //                addToCollection = {this.addToCollection}
- //                />
-
-    // <MainPage 
-    //             handleChange={this.handleChange}
-    //             searchShows={this.searchShows}
-    //             searchedShowsList={this.state.searchedShowsList}
-    //             addToCollection={this.addToCollection}
-    //             />

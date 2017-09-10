@@ -1,6 +1,7 @@
 import React from 'react';
 
 class SearchBar extends React.Component {
+
 	render(){
 		return (
 				<form onSubmit={this.props.searchShows}>

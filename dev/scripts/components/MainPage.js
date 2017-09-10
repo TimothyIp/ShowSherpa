@@ -5,6 +5,7 @@ import SearchBar from './SearchBar';
 import ShowCards from './ShowCards';
 
 class MainPage extends React.Component {
+
 	render() {
 		return(
 			<div>
@@ -13,9 +14,9 @@ class MainPage extends React.Component {
 				searchShows= {this.props.searchShows}
 				/>
 				<ShowCards
-				 searchedShowsList= {this.props.searchedShowsList}
-				 addToCollection= {this.props.addToCollection}
-				 removeFromCollection={this.props.removeFromCollection}
+				searchedShowsList= {this.props.searchedShowsList}
+				addToCollection= {this.props.addToCollection}
+				removeFromCollection={this.props.removeFromCollection}
 				 />
 			</div>
 			)
