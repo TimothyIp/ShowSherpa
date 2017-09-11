@@ -6,15 +6,10 @@ import {
 class Header extends React.Component {
 	render() {
 		return(
-			<div>
-				<Link to="/"><h2>ShowSherpa</h2></Link>
+			<div className="header">
+				<Link to="/"><h2>ShowSherpa Logo</h2></Link>
 				{this.props.user ?
-				   <div>
-				     <div className='user-profile'>
-				       <img src={this.props.user.photoURL} />
-				       <h3>{this.props.user.displayName}</h3>
-				     </div>
-				   </div>
+				   null
 				   :
 				   <div className='wrapper'>
 				     <p>You must be logged in to save your collections.</p>
@@ -25,7 +20,6 @@ class Header extends React.Component {
 				    :
 				    <button onClick={this.props.login}>Log In</button>
 				  }
-				<div>Tiny Search goes here</div>
 			</div>
 			)
 	}

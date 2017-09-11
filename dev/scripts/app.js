@@ -253,48 +253,54 @@ class App extends React.Component {
     render() {
         return (
           <Router>
-              <div>
-                <Header 
-                user = {this.state.user}
-                login = {this.login}
-                logout = {this.logout}
-                />
-                <Navigation />
-                <Route exact 
-                path="/"
-                render={(props) => (
-                  <MainPage 
-                  handleChange={this.handleChange}
-                  searchShows={this.searchShows}
-                  searchedShowsList={this.state.searchedShowsList}
-                  addToCollection={this.addToCollection}
-                  removeFromCollection={this.removeFromCollection}
+              <div className="app">
+                <div className="aside__content">
+                  <Navigation 
                   user = {this.state.user}
-                  />
-                )}
-                />
-                <Route exact 
-                path="/usershows" 
-                render={(props) => (
-                  <UserCatalogue
+                   />
+                </div>
+                <div className="main__content">
+                  <Header 
                   user = {this.state.user}
-                  userCollection={this.state.userCollection}
-                  removeFromCollection={this.removeFromCollection}
+                  login = {this.login}
+                  logout = {this.logout}
                   />
-                  )}
-                />
                 <Route exact 
-                path="/user-showtimes"
-                render= {(props) => (
-                  <UserCalendar 
-                  userCollection = {this.state.userCollection}
-                  futureEpisodes = {this.state.futureEpisodes}
-                  getUserShowTimes = {this.getUserShowTimes}
-                  addToCalendar = {this.addToCalendar}
-                  events = {this.state.events}
-                  />
+                  path="/"
+                  render={(props) => (
+                    <MainPage 
+                    handleChange={this.handleChange}
+                    searchShows={this.searchShows}
+                    searchedShowsList={this.state.searchedShowsList}
+                    addToCollection={this.addToCollection}
+                    removeFromCollection={this.removeFromCollection}
+                    user = {this.state.user}
+                    />
                   )}
-                />
+                  />
+                  <Route exact 
+                  path="/usershows" 
+                  render={(props) => (
+                    <UserCatalogue
+                    user = {this.state.user}
+                    userCollection={this.state.userCollection}
+                    removeFromCollection={this.removeFromCollection}
+                    />
+                    )}
+                  />
+                  <Route exact 
+                  path="/user-showtimes"
+                  render= {(props) => (
+                    <UserCalendar 
+                    userCollection = {this.state.userCollection}
+                    futureEpisodes = {this.state.futureEpisodes}
+                    getUserShowTimes = {this.getUserShowTimes}
+                    addToCalendar = {this.addToCalendar}
+                    events = {this.state.events}
+                    />
+                    )}
+                  />
+                  </div>
               </div>
             </Router>
         )
