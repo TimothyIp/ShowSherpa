@@ -88,12 +88,6 @@ class App extends React.Component {
       this.setState({
         userCollection: showsPicked
       })
-
-      // this.setState(() => {
-      //   this.fireBaseSync();
-      // }, () => {
-      //   this.getUserShowTimes();
-      // })
     }
 
     removeFromCollection(index, firebaseId) {
