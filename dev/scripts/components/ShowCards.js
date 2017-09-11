@@ -37,7 +37,7 @@ class ShowCards extends React.Component {
 												<h2>{show.name}</h2>
 												<p>{show.genres[0]}</p>
 												<button onClick={() => {
-													this.props.removeFromCollection(index)
+													this.props.removeFromCollection(index,show.fbaseId)
 												}}>Remove from Collection</button>
 											</div>
 										</li>

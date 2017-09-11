@@ -12,9 +12,9 @@ import Header from './components/Header';
 import MainPage from './components/MainPage';
 import UserCalendar from './components/UserCalendar';
 import moment from 'moment';
-import firebase from './firebase';
+import firebase, { auth, provider } from './firebase';
 
-const dbRef = firebase.database().ref('/usersvault');
+const dbRef = firebase.database().ref('/usersInfo');
 
 
 class App extends React.Component {
@@ -26,7 +26,10 @@ class App extends React.Component {
       this.removeFromCollection = this.removeFromCollection.bind(this);
       this.getUserShowTimes = this.getUserShowTimes.bind(this);
       this.addToCalendar = this.addToCalendar.bind(this);
+      this.login = this.login.bind(this);
+      this.logout = this.logout.bind(this);
       this.state = {
+        user: null,
         searchedShowsList : [],
         userCollection: [],
         userShowTimes: [],
@@ -35,15 +38,34 @@ class App extends React.Component {
       };
     }
 
+    login() {
+      auth.signInWithPopup(provider) 
+         .then((result) => {
+          console.log(result)
+           const user = result.user;
+           this.setState({
+             user: user
+           });
+         });
+    }
+
+    logout() {
+      auth.signOut()
+         .then(() => {
+           this.setState({
+             user: null
+           });
+         });
+    }
+
     addToCollection(show) {
       const showsPickedList = Array.from(this.state.userCollection);
       showsPickedList.push(show);
-  
       //remove duplicate tv shows
       let showsPicked = showsPickedList.filter( function( item, index, self) {
         return index == self.indexOf(item);
       })
-
+      dbRef.push(show);
       this.setState({
         userCollection: showsPicked
       }, () => {
@@ -52,8 +74,11 @@ class App extends React.Component {
 
     }
 
-    removeFromCollection(index) {
+    removeFromCollection(index, firebaseId) {
+      console.log(firebaseId)
       const showRemoved = Array.from(this.state.userCollection);
+      const itemRef = firebase.database().ref(`/usersInfo/${firebaseId}`);
+      itemRef.remove();
       showRemoved.splice(index,1);
       this.setState({
         userCollection: showRemoved
@@ -128,32 +153,81 @@ class App extends React.Component {
       this.setState({
         futureEpisodes: showTimesInfo
       })
-      console.log(this.state.futureEpisodes)
     }
 
     addToCalendar() {
+      console.log("future episode state", this.state.futureEpisodes)
       let eventList = [];
       let eventArray = Array.from(this.state.futureEpisodes);
       for (let i = 0; i < eventArray.length; i++) {
         for (let j = 0; j < eventArray[i].futureEpisodes.length; j++) {
           eventList.push({
             title: eventArray[i].name,
-            start: moment(eventArray[i].futureEpisodes[j].airstamp).format("llll"),
-            end: moment(eventArray[i].futureEpisodes[j].airstamp).add(eventArray[i].futureEpisodes[j].runtime, "m").format("llll"),
+            start: moment(eventArray[i].futureEpisodes[j].airstamp).toDate(),
+            end: moment(eventArray[i].futureEpisodes[j].airstamp).add(eventArray[i].futureEpisodes[j].runtime, "m").toDate(),
             desc: eventArray[i].futureEpisodes[j].name,
           })
         }
       }
+      console.log("event list", eventList)
         this.setState({
           events: eventList
         })
        }
 
+    componentDidMount() {
+
+      auth.onAuthStateChanged((user) => {
+          if (user) {
+            this.setState({ user });
+          } 
+        });
+
+      dbRef.on('value', (snapshot) => {
+        let shows = snapshot.val();
+        let firebaseUserCollection = [];
+        console.log(shows)
+        for (let show in shows) {
+          firebaseUserCollection.push({
+            fbaseId: show,
+            genres: shows[show].genres,
+            id: shows[show].id,
+            image: {"medium": shows[show].image.medium },
+            name: shows[show].name,
+            runtime: shows[show].runtime,
+            summary: shows[show].summary,
+          })
+        }       
+        //remove duplicates
+        function trim(arr, key) {
+            var values = {};
+            return arr.filter(function(item){
+                var val = item[key];
+                var exists = values[val];
+                values[val] = true;
+                return !exists;
+            });
+        }
+
+        // console.log( trim(firebaseUserCollection, 'id'))
+        // console.log(firebaseUserCollection)
+       this.setState({
+        userCollection: trim(firebaseUserCollection, 'id')
+       })
+       this.getUserShowTimes();
+       this.addToCalendar();
+      })
+ 
+    }
+
     render() {
         return (
           <Router>
               <div>
-                <Header />
+                <Header 
+                user = {this.state.user}
+                login = {this.login}
+                />
                 <Navigation />
                 <Route exact 
                 path="/"

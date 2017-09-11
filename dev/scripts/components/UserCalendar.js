@@ -14,7 +14,6 @@ class UserCalendar extends React.Component {
                 getUserShowTimes = {this.props.getUserShowTimes}
                 addToCalendar = {this.props.addToCalendar}
                 events = {this.props.events}
-
 				/>
 			</div>
 			)
