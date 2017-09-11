@@ -1,15 +1,18 @@
 import React from 'react';
-
+import { 
+    BrowserRouter as Router, 
+    Route, Link, NavLink } from 'react-router-dom';
 
 class Header extends React.Component {
 	render() {
 		return(
 			<div>
-				<h2>ShowSherpa</h2>
+				<Link to="/"><h2>ShowSherpa</h2></Link>
 				{this.props.user ?
 				   <div>
 				     <div className='user-profile'>
 				       <img src={this.props.user.photoURL} />
+				       <h3>{this.props.user.displayName}</h3>
 				     </div>
 				   </div>
 				   :

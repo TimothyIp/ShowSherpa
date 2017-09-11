@@ -10,7 +10,7 @@ class Navigation extends React.Component {
 		return (
                 <div>
                     <h1>Navigation</h1>
-                    <Link to="/">Home</Link>
+                    <Link to="/">Search</Link>
                     <Link to="/usershows">My TV Shows</Link>
                     <Link to="/user-showtimes">My Show Times</Link>
                 </div>

@@ -14,7 +14,8 @@ import UserCalendar from './components/UserCalendar';
 import moment from 'moment';
 import firebase, { auth, provider } from './firebase';
 
-const dbRef = firebase.database().ref('/usersInfo');
+
+const dbRef = firebase.database().ref('/usersInfo')
 
 
 class App extends React.Component {
@@ -34,7 +35,7 @@ class App extends React.Component {
         userCollection: [],
         userShowTimes: [],
         futureEpisodes: [],
-        events: []
+        events: [],
       };
     }
 
@@ -44,7 +45,10 @@ class App extends React.Component {
           console.log(result)
            const user = result.user;
            this.setState({
-             user: user
+             user: user,
+             userCollection: [],
+           }, () => {
+            this.fireBaseSync()
            });
          });
     }
@@ -53,19 +57,27 @@ class App extends React.Component {
       auth.signOut()
          .then(() => {
            this.setState({
-             user: null
+             user: null,
+             searchedShowsList : [],
+             userCollection: [],
+             userShowTimes: [],
+             futureEpisodes: [],
+             events: [],
            });
          });
     }
 
     addToCollection(show) {
       const showsPickedList = Array.from(this.state.userCollection);
+      if(this.state.user){
+        const dbRef = firebase.database().ref(`usersInfo/${this.state.user.uid}`)
+        dbRef.push(show);
+      }
       showsPickedList.push(show);
       //remove duplicate tv shows
       let showsPicked = showsPickedList.filter( function( item, index, self) {
         return index == self.indexOf(item);
       })
-      dbRef.push(show);
       this.setState({
         userCollection: showsPicked
       }, () => {
@@ -77,8 +89,11 @@ class App extends React.Component {
     removeFromCollection(index, firebaseId) {
       console.log(firebaseId)
       const showRemoved = Array.from(this.state.userCollection);
-      const itemRef = firebase.database().ref(`/usersInfo/${firebaseId}`);
-      itemRef.remove();
+      if(this.state.user) {
+        const userId = this.state.user.uid;
+        const itemRef = firebase.database().ref(`usersInfo/${userId}/${firebaseId}`);
+        itemRef.remove();
+      }
       showRemoved.splice(index,1);
       this.setState({
         userCollection: showRemoved
@@ -105,7 +120,6 @@ class App extends React.Component {
           q: showName
         }
       }).then((res)=> {
-
         //filter out tv shows with no posters
         let showsWithPoster= [];
         for (let i = 0; i < res.length; i++) {
@@ -152,11 +166,10 @@ class App extends React.Component {
 
       this.setState({
         futureEpisodes: showTimesInfo
-      })
+      },)
     }
 
     addToCalendar() {
-      console.log("future episode state", this.state.futureEpisodes)
       let eventList = [];
       let eventArray = Array.from(this.state.futureEpisodes);
       for (let i = 0; i < eventArray.length; i++) {
@@ -169,33 +182,26 @@ class App extends React.Component {
           })
         }
       }
-      console.log("event list", eventList)
         this.setState({
           events: eventList
         })
        }
 
-    componentDidMount() {
-
-      auth.onAuthStateChanged((user) => {
-          if (user) {
-            this.setState({ user });
-          } 
-        });
-
-      dbRef.on('value', (snapshot) => {
+    fireBaseSync() {
+       dbRef.on('value', (snapshot) => {
         let shows = snapshot.val();
         let firebaseUserCollection = [];
-        console.log(shows)
-        for (let show in shows) {
+        let userId = this.state.user.uid;
+
+        for (let show in shows[`${userId}`]) {
           firebaseUserCollection.push({
             fbaseId: show,
-            genres: shows[show].genres,
-            id: shows[show].id,
-            image: {"medium": shows[show].image.medium },
-            name: shows[show].name,
-            runtime: shows[show].runtime,
-            summary: shows[show].summary,
+            genres: shows[`${userId}`][show].genres,
+            id: shows[`${userId}`][show].id,
+            image: {"medium": shows[`${userId}`][show].image.medium },
+            name: shows[`${userId}`][show].name,
+            runtime: shows[`${userId}`][show].runtime,
+            summary: shows[`${userId}`][show].summary,
           })
         }       
         //remove duplicates
@@ -213,11 +219,24 @@ class App extends React.Component {
         // console.log(firebaseUserCollection)
        this.setState({
         userCollection: trim(firebaseUserCollection, 'id')
+       }, () => {
+        console.log("firebase info taken")
        })
        this.getUserShowTimes();
        this.addToCalendar();
       })
- 
+    }
+
+    componentDidMount() {
+      // auth.onAuthStateChanged((user) => {
+      //     if (user) {
+      //       this.setState({ 
+      //         user:user,
+      //       },() => {
+      //       this.fireBaseSync();
+      //       });
+      //     } 
+      //   });
     }
 
     render() {
@@ -227,6 +246,7 @@ class App extends React.Component {
                 <Header 
                 user = {this.state.user}
                 login = {this.login}
+                logout = {this.logout}
                 />
                 <Navigation />
                 <Route exact 
@@ -238,6 +258,7 @@ class App extends React.Component {
                   searchedShowsList={this.state.searchedShowsList}
                   addToCollection={this.addToCollection}
                   removeFromCollection={this.removeFromCollection}
+                  user = {this.state.user}
                   />
                 )}
                 />
@@ -245,6 +266,7 @@ class App extends React.Component {
                 path="/usershows" 
                 render={(props) => (
                   <UserCatalogue
+                  user = {this.state.user}
                   userCollection={this.state.userCollection}
                   removeFromCollection={this.removeFromCollection}
                   />

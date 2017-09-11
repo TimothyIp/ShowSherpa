@@ -17,7 +17,9 @@ class MainPage extends React.Component {
 				searchedShowsList= {this.props.searchedShowsList}
 				addToCollection= {this.props.addToCollection}
 				removeFromCollection={this.props.removeFromCollection}
+				user = {this.props.user}
 				 />
+				
 			</div>
 			)
 	}
