@@ -42,7 +42,7 @@ class App extends React.Component {
     login() {
       auth.signInWithPopup(provider) 
          .then((result) => {
-          console.log(result)
+          // console.log(result)
            const user = result.user;
            this.setState({
              user: user,
@@ -71,19 +71,29 @@ class App extends React.Component {
       const showsPickedList = Array.from(this.state.userCollection);
       if(this.state.user){
         const dbRef = firebase.database().ref(`usersInfo/${this.state.user.uid}`)
+
         dbRef.push(show);
+        this.setState(() => {
+          this.fireBaseSync();
+        }, () => {
+          this.getUserShowTimes();
+        })
       }
       showsPickedList.push(show);
       //remove duplicate tv shows
       let showsPicked = showsPickedList.filter( function( item, index, self) {
         return index == self.indexOf(item);
       })
+
       this.setState({
         userCollection: showsPicked
-      }, () => {
-        this.getUserShowTimes();
       })
 
+      // this.setState(() => {
+      //   this.fireBaseSync();
+      // }, () => {
+      //   this.getUserShowTimes();
+      // })
     }
 
     removeFromCollection(index, firebaseId) {
@@ -204,7 +214,7 @@ class App extends React.Component {
             summary: shows[`${userId}`][show].summary,
           })
         }       
-        //remove duplicates
+        //remove duplicates from array
         function trim(arr, key) {
             var values = {};
             return arr.filter(function(item){
@@ -228,15 +238,16 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-      // auth.onAuthStateChanged((user) => {
-      //     if (user) {
-      //       this.setState({ 
-      //         user:user,
-      //       },() => {
-      //       this.fireBaseSync();
-      //       });
-      //     } 
-      //   });
+      auth.onAuthStateChanged((user) => {
+          if (user) {
+            this.setState({ 
+              user:user,
+              userCollection: [],
+            },() => {
+            this.fireBaseSync();
+            });
+          } 
+        });
     }
 
     render() {
