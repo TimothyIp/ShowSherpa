@@ -42,7 +42,7 @@ class App extends React.Component {
     login() {
       auth.signInWithPopup(provider) 
          .then((result) => {
-          console.log(result)
+          // console.log(result)
            const user = result.user;
            this.setState({
              user: user,
@@ -204,7 +204,7 @@ class App extends React.Component {
             summary: shows[`${userId}`][show].summary,
           })
         }       
-        //remove duplicates
+        //remove duplicates from array
         function trim(arr, key) {
             var values = {};
             return arr.filter(function(item){
@@ -228,15 +228,16 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-      // auth.onAuthStateChanged((user) => {
-      //     if (user) {
-      //       this.setState({ 
-      //         user:user,
-      //       },() => {
-      //       this.fireBaseSync();
-      //       });
-      //     } 
-      //   });
+      auth.onAuthStateChanged((user) => {
+          if (user) {
+            this.setState({ 
+              user:user,
+              userCollection: [],
+            },() => {
+            this.fireBaseSync();
+            });
+          } 
+        });
     }
 
     render() {
