@@ -1,16 +1,21 @@
-@import "partials/_normalize";
+@import "partials/normalize";
+@import "partials/palette";
 @import "partials/calendar";
 @import "partials/header";
 @import "partials/mainpage";
 @import "partials/navigation";
 @import "partials/searchbar";
 @import "partials/searchpage";
+@import "partials/usercatalogue";
 @import "partials/showcards";
+
 
 
 body { 
 	background-color: papayawhip;
   font-family: 'Roboto', sans-serif;
+  // font-family: 'Dosis', sans-serif;
+  font-size: 16px;
 }
 
 .app {

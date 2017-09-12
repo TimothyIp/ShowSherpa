@@ -7,7 +7,7 @@ class Header extends React.Component {
 	render() {
 		return(
 			<div className="header">
-				<Link to="/"><h2>ShowSherpa</h2></Link>
+				<Link to="/"><h2>SHOWSHERPA</h2></Link>
 				{this.props.user ?
 				   null
 				   :

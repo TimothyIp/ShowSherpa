@@ -5,7 +5,7 @@ class UserCatalogue extends React.Component {
 
 	render(){
 		return (
-			<div>
+			<div className="usercatalogue__container">
 				<h1>Your Collection</h1>
 				<ShowCards 
 				user = {this.props.user}

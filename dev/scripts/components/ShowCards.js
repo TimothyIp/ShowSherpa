@@ -10,16 +10,15 @@ class ShowCards extends React.Component {
 
 	render(){
 		return (
-			<div className="wrapper">
-				<ul>
+			<div className="showcards__wrapper">
+				
 					{this.props.searchedShowsList && 
-						<div>
+						<ul>
 							{this.props.searchedShowsList.map((show,index) => {
 									return (
 										<li key={`showId-${index}`}>
-											<div>
+											<div className="showcards__container">
 												<img src={show.show.image.medium} alt={show.show.name}/>
-												<p>{show.show.status}</p>
 												<h2>{show.show.name}</h2>
 												<button onClick={() => {
 													this.props.addToCollection(show.show)
@@ -28,15 +27,14 @@ class ShowCards extends React.Component {
 										</li>
 									)
 								})}
-						</div>}
+						</ul>}
 					{this.props.userCollection && 
-						<div>
+						<ul>
 							{this.props.userCollection.map((show,index) => {
 									return (
 										<li key={`showId-${index}`}>
-											<div>
+											<div className="showcards__container">
 												<img src={show.image.medium} alt={show.name}/>
-												<p>{show.status}</p>
 												<h2>{show.name}</h2>
 												<button onClick={() => {
 													console.log(show)
@@ -46,8 +44,8 @@ class ShowCards extends React.Component {
 										</li>
 									)
 								})}
-						</div>}
-				</ul>
+						</ul>}
+				
 			</div>
 			)
 	}
