@@ -1,11 +1,61 @@
 .aside__content {
-  width: 18%;
-  padding: 2%;
-  min-width: 250px;
-  background-color: lightblue;
-  height: 100vh;
+  width: 16rem;
+  min-width: 256px;
+  background-color: #fff;
+  position: fixed;
+  height: 100%;
 }
 
 .main__content {
-  width: 100%;
+  width:calc(100% - 16rem);
+  height: 100%;
+  margin-left: 16rem;
+  position: relative;
+}
+
+.mainpage__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+}
+
+.introduction__container {
+	position: absolute;
+	top: 39%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.introduction__container form {
+	text-align: center;
+}
+
+.intro__container {
+	z-index: 100;
+	margin-top: 4rem;
+}
+
+.intro__container h1 {
+	color: $primary-color;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 100;
+	font-size: 5.5rem;
+	letter-spacing: 2px;
+	margin: 0;
+	padding-bottom: 1.5rem;
+}
+
+.intro__container p {
+	color: $primary-color;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 200;
+	font-size: 2.2rem;
+	text-align: center;
+	margin: 0;
+	margin-bottom: 6rem;
+}
+
+.intro__container span {
+	color: $accent-color;
 }

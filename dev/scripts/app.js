@@ -117,7 +117,7 @@ class App extends React.Component {
        const showName = this.state.searchedShows
       
       ajax({
-        url:`http://api.tvmaze.com/search/shows`,
+        url:`https://api.tvmaze.com/search/shows`,
         method: "GET",
         dataType: "json",
         data: {
@@ -147,7 +147,7 @@ class App extends React.Component {
 
       for (let i = 0; i < showTimesArray.length; i++) {
         ajax({
-          url: `http://api.tvmaze.com/shows/${showTimesArray[i].id}/episodes`,
+          url: `https://api.tvmaze.com/shows/${showTimesArray[i].id}/episodes`,
           method: "GET",
           dataType: "json"
         }).then((res) => {

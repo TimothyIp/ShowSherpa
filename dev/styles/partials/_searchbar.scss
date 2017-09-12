@@ -1,0 +1,23 @@
+.searchbar__form {
+	position: relative;
+	width: 100%;
+}
+
+.searchbar__form input {
+	font-size: 1.125rem;
+	padding: 10px 10px 10px 5px;
+	display: block;
+	border: none;
+	width: 100%;
+	border-bottom: 1px solid #757575;
+	transition: all 0.2s ease-in;
+}
+
+.searchbar__form input:focus {
+	outline: none;
+}
+
+.searchbar__form input[type=text] {
+	color: $secondary-text-color;
+	font-family: 'Roboto', sans-serif;
+}
