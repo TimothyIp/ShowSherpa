@@ -30,6 +30,7 @@ class App extends React.Component {
       this.login = this.login.bind(this);
       this.logout = this.logout.bind(this);
       this.eventTriggered = this.eventTriggered.bind(this);
+      this.navBarToggle = this.navBarToggle.bind(this);
       this.state = {
         user: null,
         searchedShowsList : [],
@@ -41,7 +42,10 @@ class App extends React.Component {
         searchBarStatus: false,
         searchHeaderStatus: false,
         searchBox: "",
-        disableButton: false,
+        navBar: "",
+        navBarSlide: "fadeOutLeft",
+        mainContentSlide: "full__width",
+        snackBarSlide: {},
       };
     }
 
@@ -78,8 +82,45 @@ class App extends React.Component {
       return classNames({
         intro__slideUp: event === true,
         header__searchOn: event === "shA",
-        "true": event === "added",
       });
+    }
+
+
+
+    navBarToggle() {
+
+      if (this.state.navBar !== "menu__lineAnimate"){
+      this.setState({
+        navBar : "menu__lineAnimate",
+        navBarSlide: "",
+        mainContentSlide: "",
+      })
+    } else if (this.state.navBar === "menu__lineAnimate") {
+        this.setState({
+          navBar: "",
+          navBarSlide: "fadeOutLeft",
+          mainContentSlide: "full__width",
+        })
+      }
+  
+    }
+
+    snackBarFade(){
+        setTimeout(() => {
+            this.setState({
+            snackBarSlide: {},
+          })
+        }, 2750);
+    }
+
+    snackBar(text) {
+        this.setState({
+          snackBarSlide: {
+            text: text,
+            slide: "snackBarSlide",
+          }
+        })
+        this.snackBarFade();
     }
 
     addToCollection(show) {
@@ -95,6 +136,8 @@ class App extends React.Component {
         if (dupDetect.length === 0) {
           dbRef.push(show);
         }
+
+        this.snackBar("Added to Collection");
 
         this.setState(() => {
           this.fireBaseSync();
@@ -285,15 +328,17 @@ class App extends React.Component {
         return (
           <Router>
               <div className="app">
-                <div className="aside__content">
+                <div className={`aside__content ${this.state.navBarSlide}`}>
                   <Navigation 
                   user = {this.state.user}
                   eventCount = {this.state.eventCount}
                   userCollection = {this.state.userCollection}
+                  login = {this.login}
+                  logout = {this.logout}
                    />
-                  }
+
                 </div>
-                <div className="main__content">
+                <div className={`main__content ${this.state.mainContentSlide}`}>
                   <Header 
                   user = {this.state.user}
                   login = {this.login}
@@ -301,6 +346,10 @@ class App extends React.Component {
                   handleChange={this.handleChange}
                   searchShows={this.searchShows}
                   searchHeaderStatus = {this.state.searchHeaderStatus}
+                  mainContentSlide={this.state.mainContentSlide}
+                  eventTriggered = {this.state.eventTriggered}
+                  navBarToggle = {this.navBarToggle}
+                  navBar = {this.state.navBar}
                   />
                 <Route exact 
                   path="/"
@@ -339,6 +388,9 @@ class App extends React.Component {
                     />
                     )}
                   />
+                    <div className={`snackbar ${this.state.snackBarSlide.slide}`}>
+                      <p>{this.state.snackBarSlide.text}</p>
+                    </div>
                   </div>
               </div>
             </Router>

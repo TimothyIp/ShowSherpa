@@ -5,7 +5,11 @@ nav {
 	box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14),
 	              0 3px 14px 2px rgba(0, 0, 0, .12),
 	              0 5px 5px -3px rgba(0, 0, 0, .4);	
+}
 
+.fadeOutLeft {
+	transition: all 0.45s ease-in;
+	transform: translate3d(-100%, 0, 0);
 }
 
 .navbar {
@@ -31,6 +35,60 @@ nav {
   	transition: all 0.2s;
   }
 }
+
+$line-width: 30px;
+$line-height: 3.5px;
+$line-space: 12px;
+
+.menu {
+  position: absolute;
+   top: 25%; left: 0; bottom: 0; right: 0;
+   margin-left: 1.5rem;
+  width: 200px;
+  height: ($line-height * 3) + (2* ($line-space - $line-height));
+  cursor: hand;
+  
+  &__line, &__line:before, &__line:after {
+    position: absolute;
+     top: 0;  bottom: 0; left: 0;
+     margin: auto;
+    margin: 0 auto;
+    content: '';
+    width: $line-width;
+    height: $line-height;
+    background-color: #fff;
+    transform: rotate(0deg) scale(1);
+  }
+  &__line:before {
+    top: -$line-space;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  &__line:after {
+    top: $line-space;
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  &__line {
+    margin-top: $line-space;
+    
+    &Animate {
+      &:before {
+        top: 0;
+        height: $line-height * 1.25;
+        transform: rotate(-45deg) scale(0.75);
+        transform-origin: top left;
+        transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      &:after {
+        top: 0;
+        height: $line-height * 1.25;
+        transform: rotate(45deg) scale(0.75);
+        transform-origin: top left;
+        transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+    }
+  }
+}
+
 .navbar div {
 	text-align: center;
 	padding-top: 1.5rem;
@@ -116,4 +174,32 @@ nav {
 	color: #fff;
 	width: 100%;
 	padding-top: 0.75rem;
+}
+
+.nav__buttons button {
+	background-color: $accent-color;
+	border: none;
+	text-transform: uppercase;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size: 0.875rem;
+	color: #fff;
+	height: 2.25rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	border-radius: 2px;
+	position: absolute;
+	width: 100%;
+	bottom: 0%;
+	margin-bottom: 5rem;
+	transition: all 0.15s ease-in;
+	&:hover {
+		background-color: #000;
+	}
+}
+
+@media (max-height: 560px) {
+	.navbar div{
+		display: none;
+	}
 }

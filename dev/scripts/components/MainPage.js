@@ -27,7 +27,7 @@ class MainPage extends React.Component {
 				user = {this.props.user}
 				 />
 				
-			<Particles height="1080px" width="1920px" params={{
+			<Particles height="900px" width="1920px" params={{
   "particles": {
     "number": {
       "value": 12,

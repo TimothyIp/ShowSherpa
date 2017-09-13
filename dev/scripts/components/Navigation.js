@@ -22,11 +22,26 @@ class Navigation extends React.Component {
                                   :
                                   <div className='wrapper'>
                                     <p>Welcome, Guest!</p>
+                                    <p>You must be logged in to see your shows</p>
                                   </div>
                                     }
                    <Link to="/">Search</Link>
                    <Link to="/usershows">My TV Shows  <span className="notification">{this.props.userCollection.length}</span></Link>
                    <Link to="/user-showtimes">My Show Times <span className="notification">{this.props.eventCount}</span></Link>
+               </div>
+               <div className="nav__buttons">
+                 {this.props.user ?
+                    null
+                    :
+                    <div className='user__warning'>
+                      <p>You must be logged in to save your collections.</p>
+                    </div>
+                  }
+                 {this.props.user ?
+                     <button onClick={this.props.logout}>Log Out</button>
+                     :
+                     <button onClick={this.props.login}>Log In</button>
+                   }
                </div>
                <div className="footer">
                   Powered by TVmaze API <br/> Made with React <br/> By Timothy Ip

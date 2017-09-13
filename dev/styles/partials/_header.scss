@@ -8,6 +8,7 @@
   align-items: center;
   height: 4rem;
   width: calc(100% - 16rem);
+  width: 100%;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14),
@@ -43,6 +44,7 @@
 .header__search {
   width:32rem;
   visibility: hidden;
+  margin: 0 auto;
   opacity: 0;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -52,6 +54,7 @@
 .user__warning {
   color: #fff;
   font-size: 1rem;
+  margin: 0 auto;
 }
 
 .header__searchOn {

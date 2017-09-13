@@ -79,3 +79,23 @@
 .remove {
 	background-color: $accent-color;
 }
+
+@media (max-width: 1105px) {
+	.showcards__wrapper ul li {
+		width: 33.33%;
+	}
+}
+
+@media (max-width: 790px) {
+	.showcards__wrapper ul li {
+		width: 50%;
+	}
+}
+
+@media (max-width: 625px) {
+	.showcards__wrapper ul li {
+		padding:0;
+		width: 100%;
+		flex-direction: column;
+	}
+}
