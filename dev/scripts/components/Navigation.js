@@ -9,9 +9,12 @@ class Navigation extends React.Component {
 	render(){
 		return (
              <nav>
-                  <div className = "logo">
-                    <img src="../public/assets/sherpa_logo.png" alt=""/>
-                  </div>
+
+                 <Link to="/">
+                    <div className = "logo">
+                     <img src="../public/assets/sherpa_logo.png" alt=""/>
+                   </div>
+                 </Link>
                <div className = "navbar">
                    {this.props.user ?
                                   <div>

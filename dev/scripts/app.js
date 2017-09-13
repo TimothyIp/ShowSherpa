@@ -108,7 +108,10 @@ class App extends React.Component {
     snackBarFade(){
         setTimeout(() => {
             this.setState({
-            snackBarSlide: {},
+            snackBarSlide: {
+              text:"",
+              slide: "",
+            },
           })
         }, 2750);
     }
@@ -167,6 +170,9 @@ class App extends React.Component {
         itemRef.remove();
       }
       showRemoved.splice(index,1);
+
+      this.snackBar("Removed from Collection");
+
       this.setState({
         userCollection: showRemoved
       }, () => {
