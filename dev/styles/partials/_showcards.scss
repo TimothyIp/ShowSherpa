@@ -1,6 +1,8 @@
 
 .showcards__wrapper {
-	margin-top: 8rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+	margin-top: 6rem;
 }
 
 .showcards__wrapper ul {
@@ -15,18 +17,63 @@
 
 
 .showcards__wrapper ul li {
-	width: calc(25% - 24px);
+	width: calc(23% - 24px);
+	margin-bottom: 3rem;
 }
 
 .showcards__container {
 	text-align: center;
+	position: relative;
+	height: 100%;
+	font-size: 0;
+	border-radius: 2px;
+	border: 1px solid rgba(0,0,0,0.15);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+	            0 1px 5px 0 rgba(0, 0, 0, .12),
+	            0 3px 1px -2px rgba(0, 0, 0, .2);
 }
 
 .showcards__container h2 {
-	font-size: 1.25rem;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 1.2rem;
+	margin: 0;
+	padding-bottom: 2.5rem;
+	padding-top: 1.25rem;
 }
 
 .showcards__container img {
 	max-width: 100%;
 	width: 100%;
+}
+
+.btn {
+     position: absolute;
+     left: 50%;
+     bottom: -4.25%;
+     transform: translateX(-50%);
+	 height: 2.25rem;
+	 padding-left: 1.5rem;
+	 padding-right: 1.5rem;
+ 	 box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14),
+ 	             0 1px 10px 0 rgba(0, 0, 0, .12),
+ 	             0 2px 4px -1px rgba(0, 0, 0, .4);
+     text-transform: uppercase;
+     border: none;
+     color: #fff;
+     font-size: 0.875rem;
+     border-radius: 2px;
+     transition: 0.3s;
+     background-color: $primary-color;
+     &:hover {
+     	height: 2.33rem;
+     	padding-left: 1.55rem;
+     	padding-right: 1.55rem;
+     	box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14),
+     	            0 3px 14px 2px rgba(0, 0, 0, .12),
+     	            0 5px 5px -3px rgba(0, 0, 0, .4);
+     }
+}
+
+.remove {
+	background-color: $accent-color;
 }

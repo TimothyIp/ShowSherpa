@@ -26,7 +26,7 @@ class MainPage extends React.Component {
 				removeFromCollection={this.props.removeFromCollection}
 				user = {this.props.user}
 				 />
-			<Particles height="1920px" width="1080px" params={{
+			<Particles height="1080px" width="1920px" params={{
   "particles": {
     "number": {
       "value": 17,

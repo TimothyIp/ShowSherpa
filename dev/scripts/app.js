@@ -132,8 +132,6 @@ class App extends React.Component {
 
        let searchHeaderAnimate = this.eventTriggered("shA")
 
-
-
        this.setState({
         searchBarStatus: searchbarAnimate,
         searchHeaderStatus: searchHeaderAnimate,
@@ -188,12 +186,13 @@ class App extends React.Component {
             futureEpisodes: futureEpisodeTime
             })
           }
+             this.setState({
+        futureEpisodes: showTimesInfo
+      },() => {
+        this.addToCalendar();
+      })
         })
       }
-
-      this.setState({
-        futureEpisodes: showTimesInfo
-      },)
     }
 
     addToCalendar() {
@@ -247,7 +246,6 @@ class App extends React.Component {
        this.setState({
         userCollection: trim(firebaseUserCollection, 'id')
        }, () => {
-        console.log("firebase info taken")
        })
        this.getUserShowTimes();
        this.addToCalendar();
@@ -274,7 +272,10 @@ class App extends React.Component {
                 <div className="aside__content">
                   <Navigation 
                   user = {this.state.user}
+                  futureEpisodes = {this.state.futureEpisodes}
                    />
+                  }
+                  }
                 </div>
                 <div className="main__content">
                   <Header 

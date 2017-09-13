@@ -19,11 +19,13 @@ class ShowCards extends React.Component {
 										<li key={`showId-${index}`}>
 											<div className="showcards__container">
 												<img src={show.show.image.medium} alt={show.show.name}/>
-												<h2>{show.show.name}</h2>
-												<button onClick={() => {
-													this.props.addToCollection(show.show)
-												}}>Add to Collection</button>
-											</div>
+												
+													<h2>{show.show.name}</h2>
+													<button className="btn" type="button" onClick={() => {
+														this.props.addToCollection(show.show)
+													}}>Add to Collection</button>
+												</div>
+											
 										</li>
 									)
 								})}
@@ -35,12 +37,14 @@ class ShowCards extends React.Component {
 										<li key={`showId-${index}`}>
 											<div className="showcards__container">
 												<img src={show.image.medium} alt={show.name}/>
-												<h2>{show.name}</h2>
-												<button onClick={() => {
-													console.log(show)
-													this.props.removeFromCollection(index,show.fbaseId)
-												}}>Remove from Collection</button>
-											</div>
+										
+													<h2>{show.name}</h2>
+													<button className="btn remove" type="button" onClick={() => {
+														console.log(show)
+														this.props.removeFromCollection(index,show.fbaseId)
+													}}>Remove</button>
+												</div>
+										
 										</li>
 									)
 								})}

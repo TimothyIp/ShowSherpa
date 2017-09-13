@@ -19,7 +19,7 @@ class Calendar extends React.Component {
 	render() {
 		return(
 			<div className="calendar__container">
-				<div>Calendar goes here</div>
+				<h2>Your Show Times</h2>
 				<BigCalendar 
 				// {...this.props}
 				events = {this.props.events}
