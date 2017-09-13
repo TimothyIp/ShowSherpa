@@ -27,6 +27,9 @@ class Navigation extends React.Component {
                    <Link to="/usershows">My TV Shows</Link>
                    <Link to="/user-showtimes">My Show Times</Link>
                </div>
+               <div className="footer">
+                  
+               </div>
              </nav>
 
 			)

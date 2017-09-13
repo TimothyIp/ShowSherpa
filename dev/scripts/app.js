@@ -13,7 +13,7 @@ import MainPage from './components/MainPage';
 import UserCalendar from './components/UserCalendar';
 import moment from 'moment';
 import firebase, { auth, provider } from './firebase';
-
+var classNames = require('classnames');
 
 const dbRef = firebase.database().ref('/usersInfo')
 
@@ -29,6 +29,7 @@ class App extends React.Component {
       this.addToCalendar = this.addToCalendar.bind(this);
       this.login = this.login.bind(this);
       this.logout = this.logout.bind(this);
+      this.eventTriggered = this.eventTriggered.bind(this);
       this.state = {
         user: null,
         searchedShowsList : [],
@@ -36,6 +37,9 @@ class App extends React.Component {
         userShowTimes: [],
         futureEpisodes: [],
         events: [],
+        searchBarStatus: false,
+        searchHeaderStatus: false,
+        searchBox: "",
       };
     }
 
@@ -65,6 +69,14 @@ class App extends React.Component {
              events: [],
            });
          });
+    }
+
+    eventTriggered(event) {
+      console.log("event trigged" , event)
+      return classNames({
+        intro__slideUp: event === true,
+        header__searchOn: event === "shA",
+      });
     }
 
     addToCollection(show) {
@@ -115,7 +127,18 @@ class App extends React.Component {
     searchShows(e) {
       e.preventDefault();
        const showName = this.state.searchedShows
-      
+
+       let searchbarAnimate = this.eventTriggered(true);
+
+       let searchHeaderAnimate = this.eventTriggered("shA")
+
+
+
+       this.setState({
+        searchBarStatus: searchbarAnimate,
+        searchHeaderStatus: searchHeaderAnimate,
+       })
+
       ajax({
         url:`https://api.tvmaze.com/search/shows`,
         method: "GET",
@@ -258,6 +281,9 @@ class App extends React.Component {
                   user = {this.state.user}
                   login = {this.login}
                   logout = {this.logout}
+                  handleChange={this.handleChange}
+                  searchShows={this.searchShows}
+                  searchHeaderStatus = {this.state.searchHeaderStatus}
                   />
                 <Route exact 
                   path="/"
@@ -269,6 +295,8 @@ class App extends React.Component {
                     addToCollection={this.addToCollection}
                     removeFromCollection={this.removeFromCollection}
                     user = {this.state.user}
+                    searchBarStatus = {this.state.searchBarStatus}
+                    searchBox = {this.state.searchBox}
                     />
                   )}
                   />

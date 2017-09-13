@@ -25,6 +25,21 @@
 	top: 39%;
 	left: 50%;
 	transform: translate(-50%,-50%);
+	padding-left: 4rem;
+	padding-right: 4rem;
+	padding-top: 4rem;
+	padding-bottom: 2.75rem;
+	background-color: $primary-color;
+	box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14),
+	              0 1px 18px 0 rgba(0, 0, 0, .12),
+	              0 3px 5px -1px rgba(0, 0, 0, .4);
+	border-radius: 4px;
+	transition: all 0.3s ease-in;
+}
+
+.intro__slideUp {
+	transform: translate3d(-50%,-200%,0);
+	opacity: 0;
 }
 
 .introduction__container form {
@@ -37,10 +52,10 @@
 }
 
 .intro__container h1 {
-	color: $primary-color;
+	color: #fff;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 100;
-	font-size: 5.5rem;
+	font-size: 6rem;
 	letter-spacing: 2px;
 	margin: 0;
 	padding-bottom: 1.5rem;
@@ -48,6 +63,7 @@
 
 .intro__container p {
 	color: $primary-color;
+	color: #fff;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 200;
 	font-size: 2.2rem;
@@ -58,4 +74,5 @@
 
 .intro__container span {
 	color: $accent-color;
+	font-weight: 600;
 }
