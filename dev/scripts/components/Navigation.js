@@ -17,7 +17,7 @@ class Navigation extends React.Component {
                                   <div>
                                     <img className="nav__user--image" src={this.props.user.photoURL} />
                                     <h3>Hey, {this.props.user.displayName.split(" ")[0]}</h3>
-                                    <p>{`You have ${this.props.futureEpisodes.length} upcoming shows`}</p>
+                                    <p>{`You have ${this.props.eventCount} upcoming shows`}</p>
                                   </div>
                                   :
                                   <div className='wrapper'>
@@ -25,8 +25,8 @@ class Navigation extends React.Component {
                                   </div>
                                     }
                    <Link to="/">Search</Link>
-                   <Link to="/usershows">My TV Shows</Link>
-                   <Link to="/user-showtimes">My Show Times</Link>
+                   <Link to="/usershows">My TV Shows  <span className="notification">{this.props.userCollection.length}</span></Link>
+                   <Link to="/user-showtimes">My Show Times <span className="notification">{this.props.eventCount}</span></Link>
                </div>
                <div className="footer">
                   Powered by TVmaze API <br/> Made with React <br/> By Timothy Ip

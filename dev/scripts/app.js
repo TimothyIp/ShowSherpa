@@ -37,9 +37,11 @@ class App extends React.Component {
         userShowTimes: [],
         futureEpisodes: [],
         events: [],
+        eventCount: 0,
         searchBarStatus: false,
         searchHeaderStatus: false,
         searchBox: "",
+        disableButton: false,
       };
     }
 
@@ -67,30 +69,41 @@ class App extends React.Component {
              userShowTimes: [],
              futureEpisodes: [],
              events: [],
+             eventCount: 0,
            });
          });
     }
 
     eventTriggered(event) {
-      console.log("event trigged" , event)
       return classNames({
         intro__slideUp: event === true,
         header__searchOn: event === "shA",
+        "true": event === "added",
       });
     }
 
     addToCollection(show) {
       const showsPickedList = Array.from(this.state.userCollection);
       if(this.state.user){
+        console.log(showsPickedList)
         const dbRef = firebase.database().ref(`usersInfo/${this.state.user.uid}`)
+        
+       let dupDetect = showsPickedList.filter(function(showsPicked) {
+          return showsPicked.id === show.id
+        })
 
-        dbRef.push(show);
+        if (dupDetect.length === 0) {
+          dbRef.push(show);
+        }
+
         this.setState(() => {
           this.fireBaseSync();
         }, () => {
           this.getUserShowTimes();
         })
       }
+
+
       showsPickedList.push(show);
       //remove duplicate tv shows
       let showsPicked = showsPickedList.filter( function( item, index, self) {
@@ -198,6 +211,9 @@ class App extends React.Component {
     addToCalendar() {
       let eventList = [];
       let eventArray = Array.from(this.state.futureEpisodes);
+      let eventCounter = 0;
+
+      this.eventTriggered("added")
       for (let i = 0; i < eventArray.length; i++) {
         for (let j = 0; j < eventArray[i].futureEpisodes.length; j++) {
           eventList.push({
@@ -206,10 +222,12 @@ class App extends React.Component {
             end: moment(eventArray[i].futureEpisodes[j].airstamp).add(eventArray[i].futureEpisodes[j].runtime, "m").toDate(),
             desc: eventArray[i].futureEpisodes[j].name,
           })
+          eventCounter++
         }
       }
         this.setState({
-          events: eventList
+          events: eventList,
+          eventCount: eventCounter
         })
        }
 
@@ -241,8 +259,6 @@ class App extends React.Component {
             });
         }
 
-        // console.log( trim(firebaseUserCollection, 'id'))
-        // console.log(firebaseUserCollection)
        this.setState({
         userCollection: trim(firebaseUserCollection, 'id')
        }, () => {
@@ -272,9 +288,9 @@ class App extends React.Component {
                 <div className="aside__content">
                   <Navigation 
                   user = {this.state.user}
-                  futureEpisodes = {this.state.futureEpisodes}
+                  eventCount = {this.state.eventCount}
+                  userCollection = {this.state.userCollection}
                    />
-                  }
                   }
                 </div>
                 <div className="main__content">

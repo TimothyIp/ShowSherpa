@@ -26,10 +26,11 @@ class MainPage extends React.Component {
 				removeFromCollection={this.props.removeFromCollection}
 				user = {this.props.user}
 				 />
+				
 			<Particles height="1080px" width="1920px" params={{
   "particles": {
     "number": {
-      "value": 17,
+      "value": 12,
       "density": {
         "enable": true,
         "value_area": 800

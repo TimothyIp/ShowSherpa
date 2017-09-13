@@ -3,11 +3,6 @@ import React from 'react';
 
 class ShowCards extends React.Component {
 
-	componentDidMount() {
-		console.log("showcards mount", this.props.user)
-	}
-
-
 	render(){
 		return (
 			<div className="showcards__wrapper">
@@ -19,7 +14,6 @@ class ShowCards extends React.Component {
 										<li key={`showId-${index}`}>
 											<div className="showcards__container">
 												<img src={show.show.image.medium} alt={show.show.name}/>
-												
 													<h2>{show.show.name}</h2>
 													<button className="btn" type="button" onClick={() => {
 														this.props.addToCollection(show.show)

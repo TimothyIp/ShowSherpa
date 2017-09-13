@@ -91,6 +91,21 @@ nav {
 	margin: 0;
 }
 
+.notification {
+	background-color: $accent-color;
+	border-radius: 50%;
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+	text-align: center;
+	font-size: 1rem;
+	line-height: 24px;
+	position: absolute;
+	right: 0;
+	margin-right: 1rem;
+	color: #fff;
+}
+
 .footer {
 	font-weight: 300;
 	position: absolute;
