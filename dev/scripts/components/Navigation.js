@@ -28,7 +28,7 @@ class Navigation extends React.Component {
                                     <p>You must be logged in to see your shows</p>
                                   </div>
                                     }
-                   <Link to="/">Search</Link>
+                   <Link to="/" onClick={this.props.searchBarReset}>Search</Link>
                    <Link to="/usershows">My TV Shows  <span className="notification">{this.props.userCollection.length}</span></Link>
                    <Link to="/user-showtimes">My Show Times <span className="notification">{this.props.eventCount}</span></Link>
                </div>

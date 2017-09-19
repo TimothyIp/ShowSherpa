@@ -14,7 +14,7 @@ class Header extends React.Component {
 				<div className={`header__search ${this.props.searchHeaderStatus}`}>
 					<SearchBar 
 					handleChange={this.props.handleChange}
-					                searchShows={this.props.searchShows}
+					searchShows={this.props.searchShows}
 					/>
 				</div>
 				{this.props.user ?

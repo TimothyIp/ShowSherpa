@@ -4,11 +4,13 @@
 }
 
 .searchbar__form input {
-	font-size: 1.125rem;
+	font-size: 1.5rem;
 	padding: 10px 10px 10px 5px;
 	display: block;
 	border: none;
 	width: 100%;
+	letter-spacing: 2px;
+	font-weight: 300;
 	background: none;
 	border-bottom: 1px solid #fff;
 	transition: all 0.2s ease-in;
@@ -29,4 +31,17 @@
 
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+@media (max-width: 790px) {
+
+	.menu {
+		width: 10%;
+	}
+
+	.searchbar__form input {
+		width: 50%;
+		font-size: 1rem;
+		margin: 0 auto;
+	}
 }

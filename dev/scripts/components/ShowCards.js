@@ -17,7 +17,7 @@ class ShowCards extends React.Component {
 													<h2>{show.show.name}</h2>
 													<button className="btn" type="button" onClick={() => {
 														this.props.addToCollection(show.show)
-													}}>Add to Collection</button>
+													}}>Add</button>
 												</div>
 											
 										</li>
@@ -33,9 +33,7 @@ class ShowCards extends React.Component {
 												<img src={show.image.medium} alt={show.name}/>
 										
 													<h2>{show.name}</h2>
-													<button className="btn remove" type="button" onClick={() => {
-														console.log(show)
-														this.props.removeFromCollection(index,show.fbaseId)
+													<button className="btn remove" type="button" onClick={() => {														this.props.removeFromCollection(index,show.fbaseId)
 													}}>Remove</button>
 												</div>
 										

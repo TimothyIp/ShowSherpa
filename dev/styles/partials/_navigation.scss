@@ -42,9 +42,10 @@ $line-space: 12px;
 
 .menu {
   position: absolute;
-   top: 25%; left: 0; bottom: 0; right: 0;
-   margin-left: 1.5rem;
-  width: 200px;
+  top: 25%; left: 0; bottom: 0; right: 0;
+  margin-left: 1.5rem;
+	width: 200px;
+	z-index: 600;
   height: ($line-height * 3) + (2* ($line-space - $line-height));
   cursor: hand;
   
@@ -112,10 +113,8 @@ $line-space: 12px;
 .nav__user--image {
   height: 4.5rem;
   width: 4.5rem;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
-              0 1px 5px 0 rgba(0, 0, 0, .12),
-              0 3px 1px -2px rgba(0, 0, 0, .2);
-  border-radius: 50%;
+	border-radius: 50%;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);	
 }
 
 .logo {
@@ -169,7 +168,7 @@ $line-space: 12px;
 }
 
 .footer {
-	font-weight: 300;
+	font-weight: 200;
 	position: absolute;
 	bottom: 0;
 	padding-left: 1.5rem;
@@ -178,6 +177,7 @@ $line-space: 12px;
 	color: #fff;
 	width: 100%;
 	padding-top: 0.75rem;
+	font-size: 0.8rem;
 }
 
 .nav__buttons button {
