@@ -11,7 +11,7 @@ class Navigation extends React.Component {
              <nav>
 
                  <Link to="/">
-                    <div className = "logo">
+                    <div onClick={this.props.homeStart} className = "logo">
                      <img src="../public/assets/sherpa_logo.png" alt=""/>
                    </div>
                  </Link>

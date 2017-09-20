@@ -33,6 +33,7 @@ class App extends React.Component {
     this.navBarToggle = this.navBarToggle.bind(this);
     this.searchBarReset = this.searchBarReset.bind(this);
     this.searchBarOn = this.searchBarOn.bind(this);
+    this.homeStart = this.homeStart.bind(this);
     this.state = {
       user: null,
       searchedShowsList: [],
@@ -127,13 +128,20 @@ class App extends React.Component {
 
   searchBarReset() {
       this.setState({
-      // searchBarStatus: false,
       searchHeaderStatus: false,
-      // searchedShowsList: [],
+    })
+  }
+
+  homeStart() {
+    this.setState({
+      searchBarStatus: false,
+      searchHeaderStatus: false,
+      searchedShowsList: [],
     })
   }
 
   searchBarOn() {
+    if (this.state.searchBarStatus !== false)
     this.setState({
       searchHeaderStatus: this.eventTriggered("shA")
     })
@@ -355,6 +363,7 @@ class App extends React.Component {
               logout = {this.logout}
               searchBarReset = {this.searchBarReset}
               searchBarOn = {this.searchBarOn}
+              homeStart = {this.homeStart}
             />
 
           </div>
