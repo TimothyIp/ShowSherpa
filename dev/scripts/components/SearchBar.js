@@ -1,7 +1,6 @@
 import React from 'react';
 
 class SearchBar extends React.Component {
-
 	render(){
 		return (
 				<form className="searchbar__form" onSubmit={this.props.searchShows} autoComplete="off">

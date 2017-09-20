@@ -13,8 +13,8 @@ import MainPage from './components/MainPage';
 import UserCalendar from './components/UserCalendar';
 import moment from 'moment';
 import firebase, { auth, provider } from './firebase';
-var classNames = require('classnames');
 
+const classNames = require('classnames');
 const dbRef = firebase.database().ref('/usersInfo')
 
 
@@ -112,7 +112,7 @@ class App extends React.Component {
           slide: "",
         },
       })
-    }, 2750);
+    }, 4000);
   }
 
   snackBar(text) {

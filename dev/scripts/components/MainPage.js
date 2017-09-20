@@ -11,14 +11,14 @@ class MainPage extends React.Component {
 	render() {
 		return(
 			<div className="mainpage__container">
-					<div className={`introduction__container ${this.props.searchBarStatus}`}>
-						<Introduction />
-						<SearchBar 
-						handleChange= {this.props.handleChange}
-						searchShows= {this.props.searchShows}
-						searchBox = {this.props.searchBox}
-						/>
-					</div>
+				<div className={`introduction__container ${this.props.searchBarStatus}`}>
+					<Introduction />
+					<SearchBar 
+					handleChange= {this.props.handleChange}
+					searchShows= {this.props.searchShows}
+					searchBox = {this.props.searchBox}
+					/>
+				</div>
 				<ShowCards
 				searchedShowsList= {this.props.searchedShowsList}
 				addToCollection= {this.props.addToCollection}
