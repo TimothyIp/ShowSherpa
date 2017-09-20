@@ -32,6 +32,7 @@ class App extends React.Component {
     this.eventTriggered = this.eventTriggered.bind(this);
     this.navBarToggle = this.navBarToggle.bind(this);
     this.searchBarReset = this.searchBarReset.bind(this);
+    this.searchBarOn = this.searchBarOn.bind(this);
     this.state = {
       user: null,
       searchedShowsList: [],
@@ -53,7 +54,6 @@ class App extends React.Component {
   login() {
     auth.signInWithPopup(provider) 
       .then((result) => {
-        // console.log(result)
         const user = result.user;
         this.setState({
           user: user,
@@ -81,8 +81,8 @@ class App extends React.Component {
 
   eventTriggered(event) {
     return classNames({
-      intro__slideUp: event === true,
-      header__searchOn: event === "shA",
+      intro__slideUp: true,
+      header__searchOn: "shA",
     });
   }
 
@@ -126,10 +126,16 @@ class App extends React.Component {
   }
 
   searchBarReset() {
-    this.setState({
-      searchBarStatus: false,
+      this.setState({
+      // searchBarStatus: false,
       searchHeaderStatus: false,
-      searchedShowsList: [],
+      // searchedShowsList: [],
+    })
+  }
+
+  searchBarOn() {
+    this.setState({
+      searchHeaderStatus: this.eventTriggered("shA")
     })
   }
 
@@ -138,7 +144,6 @@ class App extends React.Component {
   addToCollection(show) {
     const showsPickedList = Array.from(this.state.userCollection);
     if(this.state.user){
-      console.log(showsPickedList)
       const dbRef = firebase.database().ref(`usersInfo/${this.state.user.uid}`)
         
       let dupDetect = showsPickedList.filter(function(showsPicked) {
@@ -171,7 +176,6 @@ class App extends React.Component {
   }
 
   removeFromCollection(index, firebaseId) {
-    console.log(firebaseId)
     const showRemoved = Array.from(this.state.userCollection);
     if(this.state.user) {
       const userId = this.state.user.uid;
@@ -245,7 +249,6 @@ class App extends React.Component {
       }).then((res) => {
         //Gets only future episodes from todays date
         let futureEpisodeTime = res.filter((episode) => {
-          // console.log(moment(episode.airstamp).diff(moment()))
           return moment(episode.airstamp).diff(moment()) > 0
         })
         //Only puts shows with future episodes into calendar
@@ -351,6 +354,7 @@ class App extends React.Component {
               login = {this.login}
               logout = {this.logout}
               searchBarReset = {this.searchBarReset}
+              searchBarOn = {this.searchBarOn}
             />
 
           </div>

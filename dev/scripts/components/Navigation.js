@@ -28,9 +28,9 @@ class Navigation extends React.Component {
                                     <p>You must be logged in to see your shows</p>
                                   </div>
                                     }
-                   <Link to="/" onClick={this.props.searchBarReset}>Search</Link>
-                   <Link to="/usershows">My TV Shows  <span className="notification">{this.props.userCollection.length}</span></Link>
-                   <Link to="/user-showtimes">My Show Times <span className="notification">{this.props.eventCount}</span></Link>
+                   <Link to="/" onClick={this.props.searchBarOn}>Search</Link>
+                   <Link to="/usershows" onClick={this.props.searchBarReset}>My TV Shows  <span className="notification">{this.props.userCollection.length}</span></Link>
+                   <Link to="/user-showtimes" onClick={this.props.searchBarReset}>My Show Times <span className="notification">{this.props.eventCount}</span></Link>
                </div>
                <div className="nav__buttons">
                  {this.props.user ?
@@ -56,5 +56,3 @@ class Navigation extends React.Component {
 }
 
 export default Navigation;
-  // <img src={this.props.user.photoURL} />
-  //                      <h3>{this.props.user.displayName}</h3>
