@@ -31,9 +31,9 @@ class ShowCards extends React.Component {
 										<li key={`showId-${index}`}>
 											<div className="showcards__container">
 												<img src={show.image.medium} alt={show.name}/>
-										
 													<h2>{show.name}</h2>
-													<button className="btn remove" type="button" onClick={() => {														this.props.removeFromCollection(index,show.fbaseId)
+													<button className="btn remove" type="button" onClick={() => {
+														this.props.removeFromCollection(index,show.fbaseId)
 													}}>Remove</button>
 												</div>
 										

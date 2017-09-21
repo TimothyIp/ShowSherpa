@@ -60,7 +60,12 @@ class App extends React.Component {
           user: user,
           userCollection: [],
         }, () => {
-          this.fireBaseSync()
+          this.fireBaseSync();
+          //Makes the navbar not collapse on login when shown
+          //Makes navbar appear on login
+          if (this.state.navBar !== "menu__lineAnimate") {
+            this.navBarToggle();
+          }
         });
       });
   }
@@ -88,7 +93,6 @@ class App extends React.Component {
   }
 
   navBarToggle() {
-
     if (this.state.navBar !== "menu__lineAnimate"){
       this.setState({
         navBar : "menu__lineAnimate",
@@ -102,7 +106,6 @@ class App extends React.Component {
         mainContentSlide: "full__width",
       })
     }
-  
   }
 
   snackBarFade(){
